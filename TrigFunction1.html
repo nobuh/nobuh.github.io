@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Trig Function Graph</title>
+    <script>
+        var ctx, cycle, degree = 0;
+
+        function init() {
+            var canvas = document.getElementById("graph");
+            ctx = canvas.getContext("2d");
+            ctx.font = "24px sans-serif";
+
+            reset();
+
+            setInterval(tick, 10);
+        }
+
+        function reset() {
+            degree = 0;
+            cycle = document.getElementById("cycle").value;
+            document.getElementById("cycledisplay").textContent = cycle;
+        }
+
+        function tick() {
+            degree++;
+            paint();
+        }
+
+        function drawLine(x0, y0, x1, y1, color) {
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function paint() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, 600, 600);
+            ctx.save(); // ----------- save current context ------------------
+
+            ctx.translate(100, 100); // move graph origin position to (100,100)
+
+            // axis
+            drawLine(0, -100, 0, 500, "black");
+            drawLine(-100, 0, 500, 0, "black");
+
+            // radian = degree * 2pi / 360 = degree * pi / 180
+            var s0 = Math.sin(degree * Math.PI / 180); 
+            var c0 = Math.cos(degree * Math.PI / 180);
+            var c = c0 * 50, s = s0 * -50; // circle radius is 50 and Y axis is upside down in the screen.
+            drawLine(0, 0, c, s, "red");
+
+            ctx.beginPath();
+            ctx.arc(0, 0, 50, 0, 2 * Math.PI); // full circle
+            ctx.stroke();
+
+            // horizontal sin wave 
+            ctx.strokeStyle = "green";
+            ctx.beginPath();
+            ctx.moveTo(c, s);
+            for (var i = 0; i < 500; i++) {
+                var s1 = Math.sin((degree + i) * cycle * Math.PI / 180) * -50; 
+                ctx.lineTo(i, s1);
+            }
+            ctx.stroke(); 
+
+            // virtical cos wave
+            ctx.strokeStyle = "blue";
+            ctx.beginPath();
+            ctx.moveTo(c, s);
+            for (var i = 0; i < 500; i++) {
+                var c1 = Math.cos((degree + i) * cycle * Math.PI / 180) * 50; 
+                ctx.lineTo(c1, i);
+            }
+            ctx.stroke(); 
+
+            ctx.restore();  // ----------- restore previous context -------------
+        }
+    </script>
+</head>
+<body onload="init()">
+    <input id="cycle" type="range" min="0" max="10" step="0.5" value="1" onchange="reset()" />
+    cycle = <span id="cycledisplay">1</span><br /> 
+    <canvas id="graph" width="600" height="600"></canvas>
+</body>
+</html>
