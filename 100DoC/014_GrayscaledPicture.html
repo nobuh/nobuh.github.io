@@ -26,8 +26,7 @@
 			var g = src.data[i + 1];
 			var b = src.data[i + 2];
                         // RGB to YUV
-                        // Y = 0.299R + 0.587G + 0.114B
-                        var gray = Math.floor((r * 3 + g * 6 + b) / 9);
+                        var gray = Math.floor((r * 3 + g * 4 + b * 2) / 9);
 			img.data[i + 0] = gray;
 			img.data[i + 1] = gray; 
 			img.data[i + 2] = gray; 
@@ -42,7 +41,7 @@
 </head>
 
 <body onload="init()">
-  <p>Invert the picture</p>
+  <p>Grayscale</p>
   <canvas id="field" width="250" height="250"></canvas>
   <p><img id="picture" src="pexels-photo-1549201.jpg" /></p>
 </body>
