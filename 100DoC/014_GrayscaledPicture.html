@@ -22,17 +22,16 @@
 
     function processImage() {
 		for (var i = 0; i < 250 * 250 * 4; i+= 4) {
-			var red = src.data[i + 0];
-			var green = src.data[i + 1];
-			var bluye = src.data[i + 2];
-                        var alpha = 0xff;
+			var r = src.data[i + 0];
+			var g = src.data[i + 1];
+			var b = src.data[i + 2];
                         // RGB to YUV
                         // Y = 0.299R + 0.587G + 0.114B
-                        var gray = Math.floor((red * 0.299 + green * 0.587 + blue * 0.114));
+                        var gray = Math.floor((r * 3 + g * 6 + b) / 9);
 			img.data[i + 0] = gray;
 			img.data[i + 1] = gray; 
 			img.data[i + 2] = gray; 
-			img.data[i + 3] = alpha;
+			img.data[i + 3] = 0xff;
 		}
 	}
 
