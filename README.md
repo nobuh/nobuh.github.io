@@ -1,2 +1,1 @@
-# nobuh.github.io
-nobuh page
+# (Deprecated) move to https://nobuh.gitlab.io
