@@ -1,1 +1,1 @@
-# (Deprecated) move to https://nobuh.gitlab.io
+# nobuh.github.io
